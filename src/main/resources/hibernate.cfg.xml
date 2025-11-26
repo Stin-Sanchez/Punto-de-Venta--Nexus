@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Declaración estándar de XML con la codificación UTF-8 -->
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "https://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<!-- Define el tipo de documento (DTD) que Hibernate usará para validar la configuración -->
+
+<hibernate-configuration>
+    <!-- Configuración principal de Hibernate -->
+
+    <session-factory>
+        <!-- Definición de la fábrica de sesiones de Hibernate -->
+
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <!-- Especifica el controlador JDBC de MySQL para la conexión a la base de datos -->
+
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/nexus_system</property>
+        <!-- URL de conexión a la base de datos MySQL, donde "biblioteca" es el nombre de la BD -->
+
+        <property name="hibernate.connection.username">root</property>
+        <!-- Usuario para conectarse a la base de datos -->
+
+        <property name="hibernate.connection.password">190904</property>
+        <!-- Contraseña para conectarse a la base de datos (evita hardcodearla en producción) -->
+
+        <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+        <!-- Define el dialecto de Hibernate para MySQL, optimizando las consultas SQL generadas -->
+
+        <property name="show_sql">true</property>
+        <!-- Muestra las consultas SQL generadas por Hibernate en la consola (útil para debugging) -->
+
+        <property name="format_sql">true</property>
+        <!-- Formatea las consultas SQL generadas para una mejor legibilidad -->
+
+        <property name="hbm2ddl.auto">update</property>
+        <!-- Indica cómo Hibernate gestionará la estructura de la BD:
+             - "create": Crea la base de datos desde cero en cada ejecución (borra datos previos).
+             - "update": Solo actualiza los cambios en la BD sin eliminar datos.
+             - "validate": Solo valida si la estructura de la BD coincide con las entidades sin modificarla.
+             - "none": No realiza cambios en la base de datos. -->
+
+        <property name="current_session_context_class">thread</property>
+        <!-- Configura el contexto de sesión para que las sesiones se manejen en el mismo hilo de ejecución -->
+
+       <!--  <property name="hibernate.hbm2ddl.auto">create</property> -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <!-- Se mantiene la opción "update" para actualizar la base de datos sin eliminar datos -->
+
+        <!-- entities -->
+        <mapping class="entities.Ventas"></mapping>
+        <mapping class="entities.DetalleVentas"></mapping>
+        <mapping class="entities.Productos"></mapping>
+        <mapping class="entities.Usuarios"></mapping>
+         <mapping class="entities.Clientes"></mapping>
+
+    </session-factory>
+</hibernate-configuration>
