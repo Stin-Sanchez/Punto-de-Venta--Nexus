@@ -48,6 +48,7 @@
 
         <!-- entities -->
         <mapping class="entities.Ventas"></mapping>
+        <mapping class="entities.Facturas"></mapping>
         <mapping class="entities.DetalleVentas"></mapping>
         <mapping class="entities.Productos"></mapping>
         <mapping class="entities.Usuarios"></mapping>
@@ -55,8 +56,8 @@
         <mapping class="entities.Categorias"></mapping>
         <mapping class="entities.Ciudad"></mapping>
         <mapping class="entities.Direccion"></mapping>
-        <mapping class="entities.Facturas"></mapping>
         <mapping class="entities.Pais"></mapping>
         <mapping class="entities.Provincia"></mapping>
+
     </session-factory>
 </hibernate-configuration>

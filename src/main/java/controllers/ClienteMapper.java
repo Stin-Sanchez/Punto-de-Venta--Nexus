@@ -19,7 +19,7 @@ public class ClienteMapper {
         cliente.setTelefono(dto.getTelefono());
         cliente.setCedula(dto.getCedula());
         cliente.setActivo(dto.isActivo());
-        cliente.setDireccion(dto.getDireccion());
+        //cliente.setDireccion(dto.getDireccion());
         cliente.setFechaNacimiento(dto.getFechaNacimiento());
         cliente.setEstado(dto.getEstado() != null ? dto.getEstado() : EstadosUsuariosClientes.ACTIVO);
         cliente.setFechaCreacion(dto.getFechaCreacion());

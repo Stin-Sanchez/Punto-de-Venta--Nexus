@@ -22,7 +22,6 @@ public class ClientesDAOImpl implements ClientesDAO {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
         try {
-
             transaction = session.beginTransaction();
             session.save(cliente);
 

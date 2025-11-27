@@ -37,6 +37,7 @@ public class test {
     VentasDAO vdao;
     DashboardDAO ddao;
     UsuariosDAO udao;
+    CategoriasRepositoryIMP categoriaRepository;
     @BeforeEach
     void setUp() {
         clienteRepo = new ClientesDAOImpl();
@@ -44,10 +45,25 @@ public class test {
         vdao= new VentasDAOImpl();
         ddao= new DashboardDAOIMP();
         udao= new UsuariosDAOImpl();
+        categoriaRepository= new CategoriasRepositoryIMP();
     }
 
     void createDirecciones(){
 
+    }
+
+    @Test
+    void addCategorias(){
+        Categorias categoria = new Categorias();
+        categoria.setNombre("Lop");
+        categoriaRepository.crear(categoria);
+
+        Categorias categoria2 = new Categorias();
+        categoria2.setNombre("Abastos");
+        categoriaRepository.crear(categoria2);
+
+        List<Categorias> lista=categoriaRepository.listar();
+       lista.stream().map(Categorias::getNombre).distinct().forEach(System.out::println);
     }
 
     @Test

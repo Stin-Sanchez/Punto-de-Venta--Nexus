@@ -44,7 +44,7 @@ public class VentasService {
             venta.setEstado(EstadosVentas.FACTURADA);
             ventasDAO.crearVenta(venta);
             String numeroFactura = generarNumeroFacturaYActualizarEstado(venta.getId());
-            venta.setNumFactura(numeroFactura);
+           // venta.setNumFactura(numeroFactura);
             ventasDAO.actualizarVenta(venta);
             // Reducir stock por cada producto vendido
             for (DetalleVentas detalle : venta.getDetalles()) {
@@ -283,9 +283,9 @@ public BigDecimal calcularTotalVentas(List<Double> subtotalesDouble) throws Busi
         }
 
         // Validar que la venta no tenga ya un número de factura
-        if (venta.getNumFactura()!= null && !venta.getNumFactura().trim().isEmpty()) {
+       /* if (venta.getNumFactura()!= null && !venta.getNumFactura().trim().isEmpty()) {
             throw new BusinessException("La venta ya tiene un número de factura asignado: " + venta.getNumFactura());
-        }
+        }*/
 
         // Validar que la venta esté en estado válido para facturar
         if (venta.getEstado() == EstadosVentas.CANCELADA) {
@@ -298,7 +298,7 @@ public BigDecimal calcularTotalVentas(List<Double> subtotalesDouble) throws Busi
             String nuevoNumeroFactura = generarSiguienteNumeroFactura(ultimaFactura);
 
             // Actualizar la venta con el número de factura y estado
-            venta.setNumFactura(nuevoNumeroFactura);
+            //venta.setNumFactura(nuevoNumeroFactura);
             venta.setEstado(EstadosVentas.FACTURADA); // Asumiendo que tienes este estado en tu enum
 
             // Guardar los cambios

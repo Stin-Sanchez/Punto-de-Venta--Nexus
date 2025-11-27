@@ -77,7 +77,7 @@ public class ClienteService {
          }
             // Llenamos los mapas con la información de imágenes y estados
             for (Clientes cliente : listaClientes) {
-                mapaDirecciones.put(cliente.getId(), cliente.getDireccion());
+                mapaDirecciones.put(cliente.getId(), cliente.getDirecciones().stream().toString());
 
             }
 
