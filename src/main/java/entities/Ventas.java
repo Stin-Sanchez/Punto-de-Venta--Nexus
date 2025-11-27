@@ -15,17 +15,14 @@ import javax.validation.constraints.*;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 
 public class Ventas {
 
-     @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "El número de factura es obligatorio")
-    @Size(min = 5, max = 20, message = "El número de factura debe tener entre 5 y 20 caracteres")
-    @Column(name = "No_Factura", nullable = true, length = 20)
-    private String numFactura;
 
     @NotNull(message = "El estado es obligatorio")
     @Enumerated(EnumType.STRING)
@@ -66,12 +63,24 @@ public class Ventas {
     @Column(name = "fecha_actualizacion")
     private LocalDate fechaActualizacion;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "factura_id", referencedColumnName = "id", unique = true)
+    private Facturas factura;
+
     @Column(nullable = false)
     private boolean activa = true;
 
-    // Constructores
-    public Ventas() {
+
+    // Se ejecuta antes de INSERT - establece ambas fechas por primera vez
+    @PrePersist
+    protected void onCreate() {
         this.fechaCreacion = LocalDate.now();
+        this.fechaActualizacion = LocalDate.now();
+    }
+
+    // Se ejecuta antes de UPDATE - solo actualiza la fecha de modificación
+    @PreUpdate
+    protected void onUpdate() {
         this.fechaActualizacion = LocalDate.now();
     }
 
@@ -83,9 +92,5 @@ public class Ventas {
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
         }
         return total;
-    }
-    @PreUpdate
-    protected void onUpdate() {
-        this.fechaActualizacion = LocalDate.now();
     }
 }

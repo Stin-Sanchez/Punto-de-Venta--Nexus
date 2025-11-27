@@ -2,22 +2,24 @@ package entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
-
 import jakarta.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Where;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+
 @Table(name = "Clientes",
         uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 @Where(clause = "activo = true AND estado= 'ACTIVO'")
-
-@AllArgsConstructor
-@Getter
-@Setter
 public class Clientes {
 
     public Clientes(Long id, String nombre) {
@@ -55,12 +57,6 @@ public class Clientes {
     @Email(message = "El formato del email es inválido")
     @Column(name = "email", nullable = false, unique = true, length = 100)
     private String email;
-    
-     @NotBlank(message = "La dirección es obligatoria")
-    @Pattern(regexp = "^[\\p{L}0-9\\s.,#-]{5,100}$",
-             message = "La dirección debe tener entre 5 y 100 caracteres y solo puede contener letras, números, espacios y ., - #")
-    @Column(name = "direccion", nullable = false, length = 150)
-    private String direccion;
 
     @NotBlank(message = "El teléfono es obligatorio")
     @Pattern(regexp = "^\\+?[0-9]{8,15}$", message = "El teléfono debe contener entre 8 y 15 dígitos")
@@ -86,15 +82,23 @@ public class Clientes {
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Ventas> ventas;
 
-    // Constructores
-    public Clientes() {
-        this.fechaCreacion = LocalDate.now();
-        this.fechaActualizacion = LocalDate.now();
-    }
+    // Relación OneToMany con Dirección
+    // Un cliente puede tener múltiples direcciones (casa, trabajo, etc.)
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Direccion> direcciones = new ArrayList<>();
+
 
     @Column(nullable = false)
     private boolean activo = true;
 
+    // Se ejecuta antes de INSERT - establece ambas fechas por primera vez
+    @PrePersist
+    protected void onCreate() {
+        this.fechaCreacion = LocalDate.now();
+        this.fechaActualizacion = LocalDate.now();
+    }
+
+    // Se ejecuta antes de UPDATE - solo actualiza la fecha de modificación
     @PreUpdate
     protected void onUpdate() {
         this.fechaActualizacion = LocalDate.now();

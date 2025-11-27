@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
 @Setter
 
 public class Usuarios {
-      @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

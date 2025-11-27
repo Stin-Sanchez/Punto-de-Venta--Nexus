@@ -46,12 +46,15 @@ public class test {
         udao= new UsuariosDAOImpl();
     }
 
+    void createDirecciones(){
+
+    }
+
     @Test
     void addClientes(){
         Clientes c1= new Clientes();
         c1.setNombre("Joss");
         c1.setApellido("Saenz");
-        c1.setDireccion("AV.Rumichaca");
         c1.setEstado(EstadosUsuariosClientes.ACTIVO);
         c1.setCedula("0803639484");
         c1.setEmail("joss12@gmail.com");
@@ -645,7 +648,17 @@ public class test {
         venta.getDetalles().add(detalleVentas5);
 
         venta.setEstado(EstadosVentas.CONFIRMADA);
-        venta.setNumFactura("000000004");
+
+        // Crear una factura
+        Facturas factura = new Facturas(
+                null,
+                "001-001-000001234",
+                "C:/Facturas/Nexus",
+                "17243412345",
+                LocalDateTime.now(),
+                venta
+        );
+        venta.setFactura(factura);
         venta.setFechaHora(LocalDateTime.now());
         venta.setTotal(venta.calcularTotal());
         ventasController.crearVenta(venta);
