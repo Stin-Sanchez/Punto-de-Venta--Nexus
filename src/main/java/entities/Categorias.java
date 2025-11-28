@@ -28,6 +28,9 @@ public class Categorias {
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaActualizacion;
 
+    @Column(nullable = false)
+    private boolean activo = true;
+
 
     @PrePersist
     protected void onCreate() {
